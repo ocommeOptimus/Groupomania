@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const apiRouter = require('./apiRouter').router
 
 const app = express()
 
@@ -17,10 +18,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use((req, res) => {
-    res.json({ message: 'Hello World !'})
-})
-
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+app.use('/api/', apiRouter)
 
 module.exports = app
