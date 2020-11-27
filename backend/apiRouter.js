@@ -7,6 +7,8 @@ exports.router = (function() {
 
     apiRouter.route('/users/register/').post(usersCtrl.register)
     apiRouter.route('/users/login/').post(usersCtrl.login)
+    apiRouter.route('/users/myaccount/').get(usersCtrl.getUserProfile)
+    apiRouter.route('/users/myaccount/').put(usersCtrl.updateUserProfile)
 
     return apiRouter
 })()

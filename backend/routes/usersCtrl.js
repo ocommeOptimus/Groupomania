@@ -7,7 +7,7 @@ const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/
 
 //FIRST WAY
 module.exports = {
-    register: function(req, res) {
+    register: (req, res) => {
         const email = req.body.email
         const username = req.body.username
         const password = req.body.password
@@ -31,7 +31,7 @@ module.exports = {
 
         models.User.findOne({
             attributes: ['email'],
-            where: {email: email }
+            where: { email: email }
         })
         .then((userFound) => {
             if (!userFound) {
@@ -60,7 +60,7 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to verify user' })
         })
     },
-    login: function(req, res) {
+    login: (req, res) => {
         const email = req.body.email
         const password = req.body.password
 
@@ -90,6 +90,57 @@ module.exports = {
         })
         .catch((err) => {
             return res.status(500).json({ 'error': 'unable to verify user' })
+        })
+    },
+    getUserProfile: (req, res) => {
+        var headerAuth = req.headers['authorization']
+        var userId = jwtUtils.getUserId(headerAuth)
+
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'wrong token' })
+        }
+
+        models.User.findOne({
+            attributes: ['id', 'email', 'username', 'bio'],
+            where: { id: userId }
+        })
+        .then((user) => {
+            if (user) {
+                res.status(201).json(user)
+            } else {
+                res.status(404).json({ 'error': 'user not found' })
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ 'error': 'cannot fetch user' })
+        })
+    },
+    updateUserProfile: (req, res) => {
+        var headerAuth = req.headers['authorization']
+        var userId = jwtUtils.getUserId(headerAuth)
+        var bio = req.body.bio
+
+        models.User.findOne({
+            attributes: ['id', 'bio'],
+            where: { id: userId }
+        })
+        .then((userFound) => {
+            if (userFound) {
+                userFound.update({
+                    bio: (bio ? bio : userFound.bio)
+                })
+                .then((userFound) => {
+                    return res.status(201).json(userFound)
+                })
+                .catch((err) => {
+                    res.status(500).json({ 'error': 'cannot update user' })
+                })
+            } else {
+                res.status(404).json({ 'error': 'user not found' })
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ 'error': 'unable to verify user' })
         })
     }
 }
