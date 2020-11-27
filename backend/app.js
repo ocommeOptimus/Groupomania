@@ -1,15 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const apiRouter = require('./apiRouter').router
+
+const userRoutes = require('./routes/user')
+const messageRoutes = require('./routes/message')
 
 const app = express()
-
-app.post('/api/comments', (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'Commentaire créé !'
-    })
-})
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -21,6 +16,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('/api/', apiRouter)
+app.use('/api/auth', userRoutes)
+app.use('/api/', messageRoutes)
 
 module.exports = app
