@@ -48,32 +48,40 @@ exports.register = (req, res) => {
 }
 
 exports.login = (req, res) => {
+    const username = req.body.username
     const email = req.body.email
     const password = req.body.password
+    var where = {}
 
-    if (email == null || password == null) {
-        return res.status(400).json({ 'error': 'missing parameters' })
+    if (username == null && email != null) {
+        where = { email: email}
+    }
+    if (username != null && email == null) {
+        where = { username: username }
     }
 
+    if ((username == null && email == null) || password == null) {
+        return res.status(400).json({ 'error': 'missing parameters' })
+    }
     models.User.findOne({
-        where: { email: email }
+        where: where
     })
-    .then((userFound) => {
+    .then(userFound => {
         if (userFound) {
         bcrypt.compare(req.body.password, userFound.password)
         .then(valid => {
-          if (!valid) {
-            return res.status(401).json({ error: 'Mot de passe incorrect !' });
-          }
-          res.status(200).json({
+        if (!valid) {
+            return res.status(401).json({ error: 'wrong password' });
+        }
+        res.status(200).json({
             userId: userFound.id,
             token: jwt.sign(
-              { userId: userFound.id,
+            { userId: userFound.id,
                 isAdmin: userFound.isAdmin },
-              'qvqvguaa8uawg3qugk6zhe89ob874bh3iq355sl8mnvz2og7e0yfsmqfic2cosdgr92o3',
-              { expiresIn: '1h' }
+            'qvqvguaa8uawg3qugk6zhe89ob874bh3iq355sl8mnvz2og7e0yfsmqfic2cosdgr92o3',
+            { expiresIn: '1h' }
             )
-          });
+        });
         })
         .catch(error => res.status(500).json({ error }))
             

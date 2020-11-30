@@ -7,6 +7,7 @@ const auth = require('../middleware/auth')
 
 router.post('/register', [
     body('email').isEmail(),
+    body('username').isLength({min: 5, max: 12}),
     body('password').isLength({ min: 5 })
   ], usersCtrlTest.register)
 
