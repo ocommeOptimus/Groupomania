@@ -9,16 +9,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <router-link class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
+            <router-link class="nav-link" :to="{ name: 'home'}">Home <span class="sr-only">(current)</span></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/register">Register</router-link>
+            <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/login">Login</router-link>
+            <router-link class="nav-link" :to="{ name: 'login' }">Login</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about">About</router-link>
+            <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link disabled" to="#" tabindex="-1" aria-disabled="true">Logout</router-link>
@@ -34,7 +34,21 @@
 export default {
   name: 'Navbar',
   props: {
-    
+    //no need in this template
+  },
+  data() {
+    return {
+      //return user.cookie = false
+    }
+  },
+  computed: {
+    //no need in this template
+  },
+  methods: {
+    //must install vuex and use mapActions or mapGetters
+  },
+  beforeMount() {
+    //get user.cookie
   }
 }
 </script>
