@@ -23,36 +23,75 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import { mapActions } from 'vuex'
 
 export default {
   name: 'Register',
-  components: {
-    
-  },
   data() {
     return {
-      email: '',
-      username: '',
-      bio: '',
-      password: '',
-      // eslint-disable-next-line no-useless-escape
-      regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      
     }
   }, 
   computed: {
     emailValidation() {
-      return this.regex.test(this.email)
+      return this.$store.getters.emailValidation
     },
     usernameValidation() {
-      return this.username.length > 4 && this.username.length < 13
+      return this.$store.getters.usernameValidation
     },
     passwordValidation() {
-      return this.password.length > 4
+      return this.$store.getters.passwordValidation
+    },
+    email: {
+      get() {
+        return this.$store.state.users.email
+      },
+      set (value) {
+        this.$store.commit('UPDATE_EMAIL_INPUT', value)
+      }
+    },
+    username: {
+      get() {
+        return this.$store.state.users.username
+      },
+      set (value) {
+        this.$store.commit('UPDATE_USERNAME_INPUT', value)
+      }
+    },
+    bio: {
+      get() {
+        return this.$store.state.users.bio
+      },
+      set (value) {
+        this.$store.commit('UPDATE_BIO_INPUT', value)
+      }
+    },
+    password: {
+      get() {
+        return this.$store.state.users.password
+      },
+      set (value) {
+        this.$store.commit('UPDATE_PWD_INPUT', value)
+      },
+      /* ...mapGetters({
+        emailValidation: "emailValidation",
+        usernameValidation: "usernameValidation",
+        passwordValidation: "passwordValidation"
+
+      }) */
     }
   },
   methods: {
     userRegister() {
+      this.$store.dispatch('userRegister')
+    }
+    /* ...mapGetters({
+        emailValidation: "emailValidation",
+        usernameValidation: "usernameValidation",
+        passwordValidation: "passwordValidation"
+
+      }) */
+    /* userRegister() {
       let newUser = {
         email: this.email,
         username: this.username,
@@ -89,11 +128,17 @@ export default {
         }
         }
       )
-    },
+    }, */
   },
   beforeMount() {
   },
   mounted() {
+    /* mapGetters({
+        emailValidation: "emailValidation",
+        usernameValidation: "usernameValidation",
+        passwordValidation: "passwordValidation"
+
+      }) */
   }
 }
 </script>
