@@ -1,11 +1,55 @@
 <template>
   <div class="home my-3 text-center">
-    <img alt="Vue logo" class="w-25" src="../assets/logo.png">
-    <h1>Bienvenue !</h1>
+    <div v-if="authorization = true">
+      <img alt="Groupomania's logo" class="home__logo" src="../assets/img/logo.svg">
+      <h1>Welcome</h1>
+      <p>Please log in to continue.</p>
+    </div>
+    <div v-else>
+      <h1>You in !</h1>
+      <p>Congratulations</p>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+export default {
+  name: 'Home',
+  data() {
+    return {
+      authorization: false
+    }
+  },
+  methods: {
+
+  },
+  beforeMount() {
+    if(this.$cookies.get('username')) {
+      this.authorization = true
+    }
+  }
+}
 
 </script>
+
+<style scoped lang="scss">
+  .home {
+    &__logo {
+      max-width: 15%;
+      animation-name: spin;
+      animation-duration: 4000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg)
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+</style>

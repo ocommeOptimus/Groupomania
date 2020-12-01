@@ -6,6 +6,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    websiteName: "Groupomania"
+  },
+  getters: {
+    copyright: (state) => {
+			const currentYear = new Date().getFullYear()
+
+			return `© Copyright ${currentYear} : ${state.websiteName}`
+		}
   },
   mutations: {
   },

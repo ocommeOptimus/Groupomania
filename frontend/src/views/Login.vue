@@ -1,16 +1,23 @@
 <template>
   <div class="login my-3 mx-md-5">
-    <form>
-      <div class="form-group p-3 mb-0" v-if="loginType">
+    <form class="form-signin">
+      <b-form-group class="pb-1 pt-3 px-3 mb-0" id="input-group-1" v-if="loginType">
+        <label for="emailInput" class="sr-only">Email address :</label>
         <b-form-input type="email" class="form-control" id="emailInput" placeholder="your@email.com" v-model="email"></b-form-input>
-      </div>
-      <div class="form-group p-3 mb-0" v-else>
+      </b-form-group>
+
+      <b-form-group class="pb-1 pt-3 px-3 mb-0" id="input-group-2" v-else>
+        <label for="userInput" class="sr-only">Your username :</label>
         <b-form-input type="text" class="form-control" id="userInput" placeholder="Username" aria-describedby="usernameRules" v-model="username"></b-form-input>
-      </div>
+      </b-form-group>
+
       <b-button pill variant="outline-secondary" class="d-flex m-auto" size="sm" @click="loginSwitchType">Switch connexion type</b-button>
-      <div class="form-group p-3 mt-3">
+
+      <b-form-group class="p-3 mt-3">
+        <label for="passwordInput" class="sr-only">Your password :</label>
         <b-form-input type="password" class="form-control" id="passwordInput" placeholder="Password" v-model="password"></b-form-input>
-      </div>
+      </b-form-group>
+
       <b-button type="submit" class="btn btn-primary mx-3" @click.prevent="userLogin">Log me in !</b-button>
     </form>
   </div>
@@ -48,14 +55,19 @@ export default {
       axios.post('http://localhost:3000/api/auth/login', userLogin)
       .then(res => {
         console.log(res)
-        //localstorage the cookie or token
+        //localStorage.setItem('access_token', this.token)
+        this.$cookies.set('username', res.data, '1d')
+
+        console.log(this.$cookies)
+        console.log(this.$cookies.get('username'))
+
         this.$bvToast.toast(`${this.username, this.email} logged in !`, {
           title: 'Success',
           variant: 'success',
           autoHideDelay: 5000 
           }
         )
-        setTimeout(function() { window.location.pathname = '/'; }, 6000)
+        //setTimeout(function() { window.location.pathname = '/'; }, 6000)
       }, err => {
         console.log(err.response)
         let errorArray = err.response.data.errors
@@ -87,3 +99,12 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.form-signin {
+  width: 100%;
+  max-width: 430px;
+  padding: 15px;
+  margin: auto;
+}
+</style>
