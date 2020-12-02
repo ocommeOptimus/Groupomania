@@ -37,7 +37,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
 
-      <b-navbar-nav class="ml-auto" v-if="user.cookie">
+      <b-navbar-nav class="ml-auto" v-if="authorization == true">
         <b-nav-item>
           <router-link class="nav-link" :to="{ name: 'home'}">Home</router-link>
         </b-nav-item>
@@ -83,7 +83,7 @@ export default {
   },
   data() {
     return {
-      //return user.cookie = false
+      authorization: false
     }
   },
   computed: {
@@ -93,7 +93,9 @@ export default {
     //must install vuex and use mapActions or mapGetters
   },
   beforeMount() {
-    //get user.cookie
+    if(this.$cookies.get('username')) {
+      this.authorization = true
+    }
   }
 }
 </script>
