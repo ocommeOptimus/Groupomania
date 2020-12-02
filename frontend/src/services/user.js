@@ -11,6 +11,15 @@ class UserRoutes {
             throw err
         })
     }
+    userLogin(userLogInfo) {
+        return axios.post('http://localhost:3000/api/auth/login', userLogInfo)
+        .then((response) => {
+            Vue.$cookies.set('user_session', response.data, '1d')
+        })
+        .catch((err) => {
+            throw err
+        })
+    }
 }
 
 

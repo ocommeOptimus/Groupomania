@@ -53,14 +53,14 @@ exports.login = (req, res) => {
     const password = req.body.password
     var where = {}
 
-    if (username == null && email != null) {
+    if (username == "" && email != "") {
         where = { email: email}
     }
-    if (username != null && email == null) {
+    if (username != "" && email == "") {
         where = { username: username }
     }
 
-    if ((username == null && email == null) || password == null) {
+    if ((username == "" && password == "") || (email == "" && password == "") || password == "") {
         return res.status(400).json({ 'error': 'missing parameters' })
     }
     models.User.findOne({

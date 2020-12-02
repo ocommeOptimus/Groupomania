@@ -13,7 +13,14 @@ export default new Vuex.Store({
       bio: '',
       password: ''
     },
-    answer: [],
+    answer: {
+      registration: [],
+      login: []
+    },
+    currentUser: {
+      id: '',
+      infos: {}
+    },
     websiteName: "Groupomania",
     // eslint-disable-next-line no-useless-escape
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -52,8 +59,14 @@ export default new Vuex.Store({
       userInfo.password = state.users.password
     },
     REGISTER_ANSWER (state, apiAnswer) {
-      state.answer = apiAnswer
-    }
+      state.answer.registration = apiAnswer
+    },
+    LOGIN_ANSWER (state, apiAnswer) {
+      state.answer.login = apiAnswer
+    },
+    /* LOGIN_ANSWER_BIS (state) {
+      state.currentUser.id = Vue.$cookies.get('user_session').userId
+    } */
   },
   actions: {
     userRegister({commit}, userInfo) {
@@ -64,6 +77,18 @@ export default new Vuex.Store({
       },
       (error) => {
         commit('REGISTER_ANSWER', error)
+        return Promise.reject(error)
+      })
+    },
+    userLogin({commit}, userLogInfo) {
+      return UserRoutes.userLogin(userLogInfo)
+      .then((userLogInfo) => {
+        console.log(userLogInfo)
+        commit('LOGIN_ANSWER', userLogInfo)
+        return Promise.resolve(userLogInfo)
+      },
+      (error) => {
+        commit('LOGIN_ANSWER', error)
         return Promise.reject(error)
       })
     }

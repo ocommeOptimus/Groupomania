@@ -32,9 +32,6 @@
 export default {
   name: 'Register',
   computed: {
-    getApiAnswer() {
-      return this.$store.getters.getApiAnswer
-    },
     emailValidation() {
       return this.$store.getters.emailValidation
     },
@@ -86,15 +83,14 @@ export default {
         password: this.password
       }
       this.$store.dispatch('userRegister', userInfo)
-      .then((res) => { 
-        console.log(res)
-        //setTimeout(function() { window.location.pathname = '/login'; }, 6000)
+      .then((res) => {
         this.$bvToast.toast(`${res.config.data.username} created ! Your UserId is n° ${res.data.userId}`, {
           title: 'Success',
           variant: 'success',
           autoHideDelay: 5000 
           }
         )
+        setTimeout(function() { window.location.pathname = '/login'; }, 6000)
       })
       .catch(error => {
         if (error.message.match(409) === ["409"]) {
