@@ -1,23 +1,32 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <Navbar />
+    <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    Footer
     }
 }
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: "Nevis";
+  src: url("./assets/fonts/nevis.ttf") format('truetype');
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Nevis", sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -35,4 +44,5 @@ export default {
     }
   }
 }
+
 </style>
