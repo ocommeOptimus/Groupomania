@@ -1,30 +1,28 @@
 <template>
 
   <div class="register my-3 mx-md-5">
-    <form>
+    <form class="form-signin">
+      <b-form-group class="px-3" id="input-group-1" description="We'll never share your email with anyone else.">
+        <label for="emailInput" class="sr-only">Email address :</label>
+        <b-form-input type="email" class="form-control" id="emailInput" placeholder="Enter your@email.com" aria-describedby="emailRules" v-model="email" :state="emailValidation"></b-form-input>
+      </b-form-group>
 
-      <div class="form-group px-3">
-        <b-form-input type="email" class="form-control" id="emailInput" placeholder="your@email.com" aria-describedby="emailRules" v-model="email" :state="emailValidation"></b-form-input>
-        <small id="emailRules" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
+      <b-form-group class="px-3" id="input-group-2" description="Must be at least 5 characters and less than 13.">
+        <label for="usernameInput" class="sr-only">Your username :</label>
+        <b-form-input type="text" class="form-control" id="usernameInput" placeholder="Enter username" aria-describedby="usernameRules" v-model="username" :state="usernameValidation"></b-form-input>
+      </b-form-group>
 
-      <div class="form-group px-3">
-        <b-form-input type="text" class="form-control" id="userInput" placeholder="Username" aria-describedby="usernameRules" v-model="username" :state="usernameValidation"></b-form-input>
-        <small id="usernameRules" class="form-text text-muted">Must be at least 5 characters and less than 13.</small>
-      </div>
+      <b-form-group class="px-3" id="input-group-3" description="Not required but way more pleasant to have one.">
+        <label for="Textarea" class="sr-only">Your description :</label>
+        <b-form-textarea class="form-control" id="Textarea" placeholder="Your bio" rows="3" aria-describedby="bioRules" v-model="bio"></b-form-textarea>
+      </b-form-group>
 
-      <div class="form-group px-3">
-        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Your bio" rows="3" aria-describedby="bioRules" v-model="bio"></textarea>
-        <small id="bioRules" class="form-text text-muted">Not required but way more pleasant to have one.</small>
-      </div>
-
-      <div class="form-group px-3">
+      <b-form-group class="px-3" id="input-group-4" description="Must be at least 5 characters.">
+        <label for="passwordInput" class="sr-only">Your password :</label>
         <b-form-input type="password" class="form-control" placeholder="Password" id="passwordInput" aria-describedby="passwordRules" v-model="password" :state="passwordValidation"></b-form-input>
-        <small id="passwordRules" class="form-text text-muted">Must be at least 5 characters.</small>
-      </div>
+      </b-form-group>
 
       <b-button type="submit" class="btn btn-primary mx-3" @click.prevent="userRegister()">Register</b-button>
-
     </form>
   </div>
 
@@ -124,3 +122,14 @@ export default {
   }
 }
 </script>
+
+ <style scoped lang="scss">
+
+.form-signin {
+  width: 100%;
+  max-width: 430px;
+  padding: 15px;
+  margin: auto;
+}
+
+</style>
