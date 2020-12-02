@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ToastPlugin } from 'bootstrap-vue'
-import axios from 'axios'
+import UserRoutes from '../services/user'
 Vue.use(ToastPlugin)
 Vue.use(Vuex)
 
@@ -13,6 +13,7 @@ export default new Vuex.Store({
       bio: '',
       password: ''
     },
+    answer: [],
     websiteName: "Groupomania",
     // eslint-disable-next-line no-useless-escape
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     getUser(state) {
       return state.users
+    },
+    getApiAnswer(state) {
+      return state.answer
     }
   },
   mutations: {
@@ -41,61 +45,27 @@ export default new Vuex.Store({
     UPDATE_USERNAME_INPUT (state, username) {state.users.username = username},
     UPDATE_BIO_INPUT (state, bio) {state.users.bio = bio},
     UPDATE_PWD_INPUT (state, password) {state.users.password = password},
-    REGISTER_USER (state) {
-      return state.users
+    REGISTER_USER (state, userInfo) {
+      userInfo.email = state.users.email,
+      userInfo.username = state.users.username,
+      userInfo.bio = state.users.bio,
+      userInfo.password = state.users.password
     },
-    REGISTER_USER_BIS(state, users) {
-      state.users = users
-    },
-    REGISTER_USER_THIRD(state, users) {
-      state.users = users
+    REGISTER_ANSWER (state, apiAnswer) {
+      state.answer = apiAnswer
     }
   },
   actions: {
-    userRegister({commit, state}, userInfo) {
-
-      console.log(commit("REGISTER_USER")),
-      console.log(commit("REGISTER_USER_BIS")),
-      console.log(commit("REGISTER_USER_BIS", "users"))
-      console.log(commit("REGISTER_USER_BIS", ...state.users))
-      console.log(...state.users)
-      console.log({...state.users.email})
-      
-      const infoUpdated = [...state.users]
-      
-      console.log('Hello World')
-
-      axios.post('http://localhost:3000/api/auth/register', infoUpdated)
-      .then(res => {
-        commit()
-        this.$bvToast.toast(`${res.data.username} created ! Your UserId is n° ${res.data.userId}`, {
-          title: 'Success',
-          variant: 'success',
-          autoHideDelay: 5000 
-          }
-        )
-        setTimeout(function() { window.location.pathname = '/login'; }, 6000)
-      }, 
-      err => {
-        console.log(err.response)
-        let errorArray = err.response.data.errors
-        
-        if (!errorArray) {
-          this.$bvToast.toast(`${err.response.data.error}`, {
-          title: 'Error',
-          variant: 'danger',
-          autoHideDelay: 5000 
-          }
-        )
-        } else {
-          this.$bvToast.toast(`Error at ${errorArray[0].param} field`, {
-          title: errorArray[0].msg,
-          variant: 'danger',
-          autoHideDelay: 5000 
-          })
-        }
-        }
-      )
+    userRegister({commit}, userInfo) {
+      return UserRoutes.userRegister(userInfo)
+      .then((response) => {
+        commit('REGISTER_ANSWER', response)
+        return Promise.resolve(response)
+      },
+      (error) => {
+        commit('REGISTER_ANSWER', error)
+        return Promise.reject(error)
+      })
     }
   },
   modules: {
