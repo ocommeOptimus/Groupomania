@@ -17,7 +17,7 @@ module.exports = {
         return (authorization != null) ? authorization.replace('Bearer ', '') : null
     },
     getUserId: (authorization) => {
-        var userId = -1
+        let userId
         var token = module.exports.parseAuthorization(authorization)
 
         if (token != null) {

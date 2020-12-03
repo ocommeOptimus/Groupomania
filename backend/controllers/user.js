@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 
 const models = require('../models')
+const jwtUtils = require('../utils/jwt.utils')
 
 
 exports.register = (req, res) => {
@@ -51,6 +52,7 @@ exports.login = (req, res) => {
     const username = req.body.username
     const email = req.body.email
     const password = req.body.password
+    
     var where = {}
 
     if (username == null && email != null) {
