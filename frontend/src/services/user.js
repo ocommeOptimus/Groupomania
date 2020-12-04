@@ -20,6 +20,13 @@ class UserRoutes {
             throw err
         })
     }
+    getUserLogin(urlId) {
+        let authorization = Vue.$cookies.get('user_session')
+        return axios.get('http://localhost:3000/api/auth/myaccount/'+ urlId, { headers: {'Authorization' : 'Bearer ' + authorization.token}} )
+        .catch((err) => {
+            throw err
+        })
+    }
 }
 
 

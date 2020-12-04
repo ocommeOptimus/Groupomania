@@ -28,7 +28,8 @@ export default {
   name: 'Login',
   data() {
     return {
-      loginType: false
+      loginType: false,
+      exempleRoute: null
     }
   },
   computed: {
@@ -80,7 +81,6 @@ export default {
         password: this.password
         }
       }
-      console.log(userLogInfo)
       this.$store.dispatch('userLogin', userLogInfo)
       .then((res) => {
         console.log(res)
@@ -90,7 +90,7 @@ export default {
           autoHideDelay: 5000 
           }
         )
-        setTimeout(function() { window.location.pathname = '/index.html'; }, 600)
+        setTimeout(function() { window.location.pathname = '/'; }, 6000)
       })
       .catch((error) => {
         console.log(error)

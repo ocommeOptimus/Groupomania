@@ -17,6 +17,7 @@ export default new Vuex.Store({
       registration: [],
       login: []
     },
+    getProfile: '',
     websiteName: "Groupomania",
     // eslint-disable-next-line no-useless-escape
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     LOGIN_ANSWER (state, apiAnswer) {
       state.answer.login = apiAnswer
     },
+    GET_PROFILE (state, profileAccess) {
+      state.getProfile = profileAccess
+    }
   },
   actions: {
     userRegister({commit}, userInfo) {
@@ -82,6 +86,17 @@ export default new Vuex.Store({
       },
       (error) => {
         commit('LOGIN_ANSWER', error)
+        return Promise.reject(error)
+      })
+    },
+    getUserProfile({commit}, urlId) {
+      return UserRoutes.getUserLogin(urlId)
+      .then((response) => {
+        commit('GET_PROFILE', response)
+        return Promise.resolve(response)
+      },
+      (error) => {
+        commit('GET_PROFILE', error)
         return Promise.reject(error)
       })
     }
