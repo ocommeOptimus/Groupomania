@@ -84,7 +84,9 @@ export default {
       }
       this.$store.dispatch('userRegister', userInfo)
       .then((res) => {
-        this.$bvToast.toast(`${res.config.data.username} created ! Your UserId is n° ${res.data.userId}`, {
+        console.log(res)
+        console.log(res.config.data.username)
+        this.$bvToast.toast(`${res.data.username} created ! Your UserId is n° ${res.data.userId}`, {
           title: 'Success',
           variant: 'success',
           autoHideDelay: 5000 
@@ -93,9 +95,9 @@ export default {
         setTimeout(function() { window.location.pathname = '/login'; }, 6000)
       })
       .catch(error => {
-        if (error.message.match(409) === ["409"]) {
+        if (error.message.match(409)[0] == 409) {
             console.log('Hello Error 409')
-            this.$bvToast.toast(`This user already exist`, {
+            this.$bvToast.toast(`This email/username already used`, {
             title: 'Error',
             variant: 'danger',
             autoHideDelay: 5000 
