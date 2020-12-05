@@ -22,7 +22,23 @@ class UserRoutes {
     }
     getUserLogin(urlId) {
         let authorization = Vue.$cookies.get('user_session')
-        return axios.get('http://localhost:3000/api/auth/myaccount/'+ urlId, { headers: {'Authorization' : 'Bearer ' + authorization.token}} )
+        return axios.get('http://localhost:3000/api/auth/account/'+ urlId, { headers: {'Authorization' : 'Bearer ' + authorization.token}} )
+        .catch((err) => {
+            throw err
+        })
+    }
+    updateUser(payload) {
+        console.log(payload[0])
+        console.log(payload[1])
+        let authorization = Vue.$cookies.get('user_session')
+        return axios.put('http://localhost:3000/api/auth/account/' + payload[0], payload[1], { headers: {'Authorization' : 'Bearer ' + authorization.token}} )
+          .catch((err) => {
+            throw err
+          })
+    }
+    deleteUser(urlId) {
+        let authorization = Vue.$cookies.get('user_session')
+        return axios.delete('http://localhost:3000/api/auth/account/' + urlId, {headers: {'Authorization' : 'Bearer ' + authorization.token}} )
         .catch((err) => {
             throw err
         })

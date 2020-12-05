@@ -18,6 +18,8 @@ export default new Vuex.Store({
       login: []
     },
     getProfile: '',
+    userUpdate: {},
+    userDelete: '',
     websiteName: "Groupomania",
     // eslint-disable-next-line no-useless-escape
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -63,6 +65,12 @@ export default new Vuex.Store({
     },
     GET_PROFILE (state, profileAccess) {
       state.getProfile = profileAccess
+    },
+    UPDATE_USER (state, userUpdate) {
+      state.userUpdate = userUpdate
+    },
+    DELETE_USER (state, userDestroy) {
+      state.userDelete = userDestroy
     }
   },
   actions: {
@@ -97,6 +105,29 @@ export default new Vuex.Store({
       },
       (error) => {
         commit('GET_PROFILE', error)
+        return Promise.reject(error)
+      })
+    },
+    updateUserProfile({commit}, payload) {
+      return UserRoutes.updateUser(payload)
+      .then((response) => {
+          commit('UPDATE_USER', response)
+          return Promise.resolve(response)
+        },
+        (error) => {
+          commit('UPDATE_USER')
+          return Promise.reject(error)
+        }
+      )
+    },
+    deleteUser({commit}, urlId) {
+      return UserRoutes.deleteUser(urlId)
+      .then((response) => {
+        commit('DELETE_USER', response)
+        return Promise.resolve(response)
+      },
+      (error) => {
+        commit('DELETE_USER', error)
         return Promise.reject(error)
       })
     }
