@@ -1,5 +1,5 @@
 <template>
-  <div class="home my-3 text-center">
+  <div class="home mt-5 text-center">
 
     <div v-if="authorization == false">
       <img alt="Groupomania's logo" class="home__logo" src="../assets/img/logo.svg">
@@ -33,6 +33,7 @@ export default {
 
 <style scoped lang="scss">
   .home {
+    margin-bottom: 100px;
     &__logo {
       max-width: 15%;
       animation-name: spin;

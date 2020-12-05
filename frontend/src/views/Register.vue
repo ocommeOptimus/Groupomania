@@ -1,7 +1,7 @@
 <template>
 
-  <div class="register my-3 mx-md-5">
-    <form class="form-signin">
+  <div class="register mt-5 mx-md-5">
+    <form class="register__form-signin">
       <b-form-group class="px-3" id="input-group-1" description="We'll never share your email with anyone else.">
         <label for="emailInput" class="sr-only">Email address :</label>
         <b-form-input type="email" class="form-control" id="emailInput" placeholder="Enter your@email.com" aria-describedby="emailRules" v-model="email" :state="emailValidation"></b-form-input>
@@ -113,21 +113,20 @@ export default {
         }
       })
     }
-  },
-  beforeMount() {
-  },
-  mounted() {
   }
 }
 </script>
 
  <style scoped lang="scss">
-
-.form-signin {
+.register {
+  margin-bottom: 100px;
+  &__form-signin {
   width: 100%;
   max-width: 430px;
   padding: 15px;
   margin: auto;
 }
+}
+
 
 </style>

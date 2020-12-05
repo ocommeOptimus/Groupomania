@@ -1,6 +1,6 @@
 <template>
     <div>
-        <footer class="footer">
+        <footer class="footer fixed-bottom">
             <div class="container text-center">{{ copyright }}</div>
         </footer>
     </div>
@@ -21,8 +21,6 @@ export default {
 
 <style scoped lang="scss">
 .footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: 60px;
     line-height: 60px;

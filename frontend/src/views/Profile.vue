@@ -1,5 +1,5 @@
 <template>
-    <div class="container text-center mt-5">
+    <div class="profile container text-center mt-5">
         <div class="row" v-if="authorization == true">
             <div class="col-12 col-md-8">
                 
@@ -32,8 +32,10 @@
                     User {{ id }} admin role
                     </b-form-checkbox>
                 </div>
-                <b-button type="submit" class="btn btn-primary m-3" @click.prevent="updateUserProfile()">Update !</b-button>
-                <b-button type="submit" class="btn btn-primary m-3" @click.prevent="updateUserProfile()">Update !</b-button>
+                <b-row>
+                    <b-col lg="6" class="pb-2"><b-button type="submit" class="btn btn-primary m-3" variant="info" @click.prevent="updateUserProfile()">Update</b-button></b-col>
+                    <b-col lg="6" class="pb-2 justify-content-center align-items-center"><delete-button /></b-col>
+                </b-row>
             </div>
             
         </div>
@@ -41,14 +43,17 @@
 </template>
 
 <script>
+import DeleteButton from '../components/DeleteButton'
+
 export default {
+  components: { DeleteButton },
     name: 'Profile',
     data() {
         return {
             id: this.$route.params.id,
             userSessionId: this.$cookies.get('user_session').userId,
             authorization: false,
-            adminAuth: false,
+            adminAuth: this.$cookies.get('user_session').isAdmin,
             user: {
                 email: "",
                 username: "",
@@ -73,32 +78,28 @@ export default {
     },
     methods: {
         getUserProfile() {
-            this.$store.dispatch('getUserProfile', this.userSessionId)
+            if (this.userSessionId == this.id || this.adminAuth) {
+            this.$store.dispatch('getUserProfile', this.id)
             .then((res) => {
-                this.adminAuth = res.data.isAdmin
-                 if (this.userSessionId == this.id || res.data.isAdmin == true) {
-                this.$store.dispatch('getUserProfile', this.id)
-                .then((res) => {
-                    this.user.email = res.data.email
-                    this.user.username = res.data.username
-                    this.user.bio = res.data.bio
-                    this.user.toggleAdmin = res.data.isAdmin
-                })
-                }
-                else {
-                    this.$bvToast.toast(`unauthorized action`, {
-                        title: 'Error',
-                        variant: 'danger',
-                        autoHideDelay: 5000 
-                    })
-                    setTimeout(function() { this.$router.push({name: 'home'}) }, 6000)
-                }
+                this.user.email = res.data.email
+                this.user.username = res.data.username
+                this.user.bio = res.data.bio
+                this.user.toggleAdmin = res.data.isAdmin
             })
+            }
+            else {
+                this.$bvToast.toast(`unauthorized action`, {
+                    title: 'Error',
+                    variant: 'danger',
+                    autoHideDelay: 5000 
+                })
+                setTimeout(function() { window.location.pathname = '/'; }, 6000)
+            }
         },
         updateUserProfile() {
-
             if (this.emailValidation && this.usernameValidation) {
                 if (this.passwordValidation) {
+
                     this.$store.dispatch('updateUserProfile', [this.id, this.user])
                     .then(() => {
                         this.$bvToast.toast(`User profile updated !`, {
@@ -113,9 +114,7 @@ export default {
                             this.user.bio = res.data.bio
                             this.user.toggleAdmin = res.data.isAdmin
                         })
-                        }
-                    )
-                    
+                    }) 
                 } else {
                     let newUserInfo = {
                         email : this.user.email,
@@ -150,7 +149,7 @@ export default {
                 })
             }
         },
-        deleteUser() {
+        /* deleteUser() {
             this.$store.dispatch('getUserProfile', this.userSessionId)
             .then((res) => {
                 if ((this.userSessionId == this.id && !res.data.isAdmin) || (this.userSessionId != this.id && res.data.isAdmin)) {
@@ -182,7 +181,7 @@ export default {
                 }
             })
             .catch((err) => err)
-        }
+        } */
     },
     created() {
         this.getUserProfile()
@@ -197,13 +196,14 @@ export default {
             variant: 'danger',
             autoHideDelay: 5000 
             })
-            setTimeout(function() { this.$router.push({name: 'home'}) }, 6000)
+            setTimeout(function() { window.location.pathname = '/'; }, 6000)
         }
-        
     },
-    mounted() {
-       // this.getUserProfile()
-    }
-    
 }
 </script>
+
+<style lang="scss" scoped>
+.profile {
+    margin-bottom: 100px;
+}
+</style>

@@ -13,21 +13,21 @@
           <b-nav-item>
             <router-link class="nav-link" :to="{ name: 'home'}">Home</router-link>
           </b-nav-item>
-          <b-nav-item>
+          <!-- <b-nav-item>
             <router-link class="nav-link" :to="{ name: 'mymessages' }">Post your message</router-link>
-          </b-nav-item>
+          </b-nav-item> -->
           <b-nav-item>
             <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
           </b-nav-item>
 
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown right class="d-flex align-items-center">
             <template #button-content>
               <em>{{ user.username }}</em>
             </template>
             <b-dropdown-item>
-              <router-link class="nav-link" :to="{ name: 'profile' + user.id }">My profile</router-link>
+              <router-link class="nav-link" :to="`/profile/${user.id}`">My profile</router-link>
             </b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item><sign-out /></b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
@@ -50,11 +50,11 @@
 </template>
 
 <script>
+import SignOut from '../components/SignOut'
+
 export default {
+  components: { SignOut },
   name: 'Navbar',
-  props: {
-    //no need in this template
-  },
   data() {
     return {
       authorization: false,
@@ -64,22 +64,17 @@ export default {
       }
     }
   },
-  computed: {
-    //no need in this template
-  },
-  methods: {
-    //must install vuex and use mapActions or mapGetters
-  },
   beforeMount() {
     if (this.$cookies.get('user_session')) {
           this.authorization = true
           this.user.id = this.$cookies.get('user_session').userId
+          this.user.username = this.$cookies.get('user_session').username
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped lang="scss">
   .navbar-groupo {
     background-color: #f5f5f5;

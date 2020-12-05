@@ -1,6 +1,6 @@
 <template>
-  <div class="login my-3 mx-md-5">
-    <form class="form-signin">
+  <div class="login mt-5 mx-md-5">
+    <form class="login__form-signin">
       <b-form-group class="pb-1 pt-3 px-3 mb-0" id="input-group-1" v-if="loginType">
         <label for="emailInput" class="sr-only">Email address :</label>
         <b-form-input type="email" class="form-control" id="emailInput" placeholder="your@email.com" v-model="email" :state="emailValidation"></b-form-input>
@@ -116,18 +116,20 @@ export default {
     loginSwitchType() {
       this.loginType = !this.loginType
     }
-  },
-  beforeMount() {
-    //Get cookie  
   }
 }
 </script>
 
 <style scoped lang="scss">
-.form-signin {
-  width: 100%;
-  max-width: 430px;
-  padding: 15px;
-  margin: auto;
+.login {
+  margin-bottom: 100px;
+  &__form-signin {
+    width: 100%;
+    max-width: 430px;
+    padding: 15px;
+    margin: auto;
+  }
 }
+
+
 </style>
