@@ -5,14 +5,11 @@ import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueCookies from 'vue-cookies';
 
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-// Install the cookies handler
-Vue.use(VueCookies)
 
 Vue.config.productionTip = false
 
