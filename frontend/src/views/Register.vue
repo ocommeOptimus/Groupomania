@@ -125,8 +125,6 @@ export default {
   max-width: 430px;
   padding: 15px;
   margin: auto;
+  }
 }
-}
-
-
 </style>

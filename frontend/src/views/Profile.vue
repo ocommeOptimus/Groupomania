@@ -148,40 +148,7 @@ export default {
                     autoHideDelaysuccess: 5000 
                 })
             }
-        },
-        /* deleteUser() {
-            this.$store.dispatch('getUserProfile', this.userSessionId)
-            .then((res) => {
-                if ((this.userSessionId == this.id && !res.data.isAdmin) || (this.userSessionId != this.id && res.data.isAdmin)) {
-                    this.$store.dispatch('deleteUser', this.id)
-                    .then((res) => {
-                        console.log(res)
-                        //if res status 200 => user deleted, else error
-                        if (res.status == 200) {
-                            this.$bvToast.toast(`${res.message}`, {
-                                title: 'Success',
-                                variant: 'success',
-                                autoHideDelaysuccess: 5000 
-                            })
-                        } else {
-                            this.$bvToast.toast(`${res.message}`, {
-                                title: 'Error',
-                                variant: 'danger',
-                                autoHideDelaysuccess: 5000 
-                            })
-                        }
-                    })
-                }
-                else {
-                    this.$bvToast.toast(`unauthorized action`, {
-                            title: 'Error',
-                            variant: 'danger',
-                            autoHideDelay: 5000 
-                    })
-                }
-            })
-            .catch((err) => err)
-        } */
+        }
     },
     created() {
         this.getUserProfile()
