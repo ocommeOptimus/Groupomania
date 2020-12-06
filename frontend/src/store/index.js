@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ToastPlugin } from 'bootstrap-vue'
-import UserRoutes from '../services/user'
+import UserRoutes from '../actions/user'
 Vue.use(ToastPlugin)
 Vue.use(Vuex)
 
