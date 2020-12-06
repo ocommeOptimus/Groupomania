@@ -13,9 +13,11 @@ router.post('/register', [
 
 router.post('/login', usersCtrlTest.login)
 
-router.get('/myaccount/:id', auth, usersCtrlTest.getUserProfile)
+router.get('/account/:id', auth, usersCtrlTest.getUserProfile)
 
-router.put('/myaccount/:id', auth, usersCtrlTest.updateUserProfile)
+router.put('/account/:id', auth, usersCtrlTest.updateUserProfile)
+
+router.delete('/account/:id', auth, usersCtrlTest.deleteUser)
 
 
 module.exports = router
