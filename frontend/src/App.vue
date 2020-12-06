@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app">
-    <Navbar />
+    <Navbar :key="$route.fullPath" />
     <Footer />
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
 }
 
 #app {
-  font-family: "Nevis", sans-serif !important;
+  font-family: "Nevis", sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,9 +44,5 @@ export default {
     }
   }
 }
-/* .app {
-  font-family: "Nevis", sans-serif !important;
-  font-weight: 400;
-} */
 
 </style>
