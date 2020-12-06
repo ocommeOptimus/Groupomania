@@ -19,5 +19,7 @@ router.put('/account/:id', auth, usersCtrlTest.updateUserProfile)
 
 router.delete('/account/:id', auth, usersCtrlTest.deleteUser)
 
+router.get('/', auth, usersCtrlTest.getAllUsers)
+
 
 module.exports = router

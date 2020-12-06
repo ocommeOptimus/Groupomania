@@ -184,3 +184,17 @@ exports.deleteUser = (req, res) => {
     })
     .catch((err) => {res.status(500).json({ 'error':'cannot fetch user'})})
 }
+
+exports.getAllUsers = (req, res, next) => {
+    models.User.findAll({
+        order: [
+            ['username', 'ASC']
+        ]
+    })
+        .then(allUsers => {
+            res.status(201).json(allUsers)
+        })
+        .catch((err) => {
+        res.status(500).json(err)
+    })
+}
