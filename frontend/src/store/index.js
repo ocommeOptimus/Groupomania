@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { ToastPlugin } from 'bootstrap-vue'
 import UserRoutes from '../actions/user'
+import MessageRoutes from '../actions/message'
 Vue.use(ToastPlugin)
 Vue.use(Vuex)
 
@@ -20,6 +21,8 @@ export default new Vuex.Store({
     getProfile: '',
     userUpdate: {},
     userDelete: '',
+    usersList: [],
+    messagesList: [],
     websiteName: "Groupomania",
     // eslint-disable-next-line no-useless-escape
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -71,6 +74,12 @@ export default new Vuex.Store({
     },
     DELETE_USER (state, userDestroy) {
       state.userDelete = userDestroy
+    },
+    GET_ALL_USERS (state, usersList) {
+      state.usersList = usersList
+    },
+    GET_ALL_MESSAGES (state, messagesList) {
+      state.messagesList = messagesList
     }
   },
   actions: {
@@ -128,6 +137,28 @@ export default new Vuex.Store({
       },
       (error) => {
         commit('DELETE_USER', error)
+        return Promise.reject(error)
+      })
+    },
+    getAllUsers({commit}) {
+      return UserRoutes.getAllUsers()
+      .then((response) => {
+        commit('GET_ALL_USERS', response.data)
+        return Promise.resolve(response)
+      },
+      (error) => {
+        commit('GET_ALL_USERS', error)
+        return Promise.reject(error)
+      })
+    },
+    getAllMessages({commit}) {
+      return MessageRoutes.getAllMessages()
+      .then((response) => {
+        commit('GET_ALL_MESSAGES', response.data)
+        return Promise.resolve(response)
+      },
+      (error) => {
+        commit('GET_ALL_MESSAGES', error)
         return Promise.reject(error)
       })
     }
