@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { body } = require('express-validator')
-const usersCtrlTest = require('../controllers/user')
+const usersCtrl = require('../controllers/user')
 const auth = require('../middleware/auth')
 
 
@@ -9,17 +9,17 @@ router.post('/register', [
     body('email').isEmail(),
     body('username').isLength({min: 5, max: 12}),
     body('password').isLength({ min: 5 })
-  ], usersCtrlTest.register)
+  ], usersCtrl.register)
 
-router.post('/login', usersCtrlTest.login)
+router.post('/login', usersCtrl.login)
 
-router.get('/account/:id', auth, usersCtrlTest.getUserProfile)
+router.get('/account/:id', auth, usersCtrl.getUserProfile)
 
-router.put('/account/:id', auth, usersCtrlTest.updateUserProfile)
+router.put('/account/:id', auth, usersCtrl.updateUserProfile)
 
-router.delete('/account/:id', auth, usersCtrlTest.deleteUser)
+router.delete('/account/:id', auth, usersCtrl.deleteUser)
 
-router.get('/', auth, usersCtrlTest.getAllUsers)
+router.get('/', auth, usersCtrl.getAllUsers)
 
 
 module.exports = router
