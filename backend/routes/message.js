@@ -5,7 +5,8 @@ const auth = require('../middleware/auth')
 
 
 
-router.get('/:id', auth, messageCtrlTest.listMessages)
+router.get('/', auth, messageCtrlTest.listMessages)
+
 router.post('/:id/messages', auth, messageCtrlTest.createMessage)
 
 
