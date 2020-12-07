@@ -12,7 +12,7 @@ Clone this repository on your local machine.
 ### Prerequisites
 
 For the serve-side web applications, you need to install the Node.js runtime and MySQL.
-You can download it at the following link :
+You can download them at these followings links :
 * [Node.js](https://nodejs.org/en/)
 * [MySQL](https://dev.mysql.com/downloads/installer/)
 
