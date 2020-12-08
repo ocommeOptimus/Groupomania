@@ -78,7 +78,7 @@ export default {
   beforeMount() {
     if(this.$cookies.get('user_session')) {
       this.authorization = true
-      this.isAdmin = this.$cookies.get('user_session').isAdmin
+      this.adminAuth = this.$cookies.get('user_session').isAdmin
     }
   },
   methods: {
