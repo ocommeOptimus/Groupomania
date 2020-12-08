@@ -34,7 +34,7 @@
                 </div>
                 <b-row>
                     <b-col lg="6" class="pb-2"><b-button type="submit" class="btn btn-primary m-3" variant="info" @click.prevent="updateUserProfile()">Update</b-button></b-col>
-                    <b-col lg="6" class="pb-2 justify-content-center align-items-center"><delete-button /></b-col>
+                    <b-col lg="6" class="pb-2 d-flex justify-content-center align-items-center"><delete-button /></b-col>
                 </b-row>
             </div>
             
