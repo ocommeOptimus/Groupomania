@@ -2,7 +2,7 @@
     <div>
 
         <b-list-group>
-            <b-list-group-item class="d-flex justify-content-between align-items-center" :href="'/myprofile/' + id">
+            <b-list-group-item class="d-flex justify-content-between align-items-center" :href="'/profile/' + id">
             {{ username }}
             <b-badge variant="primary" pill>id : {{ id }}</b-badge>
             </b-list-group-item>
