@@ -34,7 +34,7 @@
           </b-card-group>
         </div>
       </div>
-      <div class="row" v-else>
+      <div class="row justify-content-center" v-else>
         <div class="p-3">
           <messages-list
           v-for="message in messagesList"
